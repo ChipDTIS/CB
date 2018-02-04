@@ -10,19 +10,49 @@ import "./index.css";
 // import { Provider } from "react-redux";
 // import { AppContainer } from "react-hot-loader";
 import { BrowserRouter } from "react-router-dom";
-import { Route, Switch } from "react-router";
-import { FooterContainer } from "./containers/Footer/FooterContainer";
+import { Route, Switch, RouteProps, Redirect } from "react-router";
 
+// import { FooterContainer } from "./containers/Footer/FooterContainer";
+export interface ProtectedRouteProps extends RouteProps {
+  isAuthenticated: boolean;
+  authenticationPath: string;
+}
+export class ProtectedRoute extends Route<ProtectedRouteProps> {
+  public render() {
+    let redirectPath: string = "";
+    if (!this.props.isAuthenticated) {
+      redirectPath = this.props.authenticationPath;
+    }
+
+    if (redirectPath) {
+      const renderComponent = () => (<Redirect to={{ pathname: redirectPath }} />);
+      return <Route {...this.props} component={renderComponent} render={undefined} />;
+    } else {
+       return <App><Route {...this.props} /></App>;
+      // return <Route {...this.props} render={() => (<App><Component {...this.props.component}/>)} />;
+    }
+  }
+}
+
+const defaultProtectedRouteProps: ProtectedRouteProps = {
+  isAuthenticated: true,
+  authenticationPath: "/login",
+};
 ReactDOM.render(
   <BrowserRouter>
-      <Switch>
-        <App exact={true} path="/" render={() => (<h2>home</h2>)} />
-        <App path="/about/:id" render={() => (<h2>about 2</h2>)} />
-        <App path="/about" render={() => (<h2>about</h2>)} />
-        <App path="/topics" component={FooterContainer} />
-        <Route path="*" render={() => (<h2>not found</h2>)} />
-      </Switch>
-  </BrowserRouter>, 
+    <Switch>
+      <ProtectedRoute
+        {...defaultProtectedRouteProps}
+        exact={true}
+        path="/"
+        render={() => (<h1>Hello sir</h1>)}
+      />
+      <ProtectedRoute {...defaultProtectedRouteProps} exact={true} path="/user" render={() => (<h1>Hello guy</h1>)} />
+      <ProtectedRoute {...defaultProtectedRouteProps} path="/user/:id" render={() => (<h1>Hello guy 2</h1>)} />
+      <Route path="/login" render={() => (<h1>Login Page</h1>)} />
+      <Route path="*" render={() => (<h1>Page not found</h1>)} />
+    </Switch>
+  </BrowserRouter>,
   document.getElementById("root") as HTMLElement
 );
 registerServiceWorker();
