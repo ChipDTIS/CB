@@ -21,7 +21,7 @@ class App extends React.Component<any, any> {
           </Switch> */}
          
         </div>
-        <HeaderContainer/>
+     
       </div>
     );
   }

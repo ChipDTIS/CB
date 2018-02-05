@@ -53,6 +53,6 @@ ReactDOM.render(
       <Route path="*" render={() => (<h1>Page not found</h1>)} />
     </Switch>
   </BrowserRouter>,
-  document.getElementById("root") as HTMLElement
+  document.getElementById("smartadmin-root") as HTMLElement
 );
 registerServiceWorker();
