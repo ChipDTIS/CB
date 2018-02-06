@@ -1,9 +1,6 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 
-// var divStyle = {
-//     display: "none"
-//   };
-  
 export class HeaderComponent extends React.Component<{}, {}> {
     render() {
         return (
@@ -20,11 +17,11 @@ export class HeaderComponent extends React.Component<{}, {}> {
                     </div>
                 </div>
                 {/*  dropdown: open close */}
-                <div className="project-context hidden-xs dropdown"> 
+                <div className="project-context hidden-xs dropdown">
                     <span className="label">Chat bot Alpha</span>
                     {/*  dropdown: open close */}
-                    <span className="project-selector dropdown-toggle" data-toggle="dropdown" > 
-                        <span>Recent projects</span>
+                    <span className="project-selector dropdown-toggle" data-toggle="dropdown" >
+                        <span>Recent activity page</span>
                         <i className="fa fa-angle-down" />
                     </span>
                     <ul className="dropdown-menu">
@@ -40,7 +37,30 @@ export class HeaderComponent extends React.Component<{}, {}> {
                         </li>
                     </ul>
                 </div>
+                <div className="pull-right">
+                    <div id="hide-menu" className="btn-header pull-right">
+                        <span>
+                            <a data-action="toggleMenu" title="Collapse Menu" >
+                                <i className="fa fa-reorder" />
+                            </a>
+                        </span>
+                    </div>
+                    <div id="logout" className="btn-header transparent pull-right">
+                        <span>
+                            <Link to="/login" onClick={() => this.testAlert} title="Đăng xuất"  data-logout-msg="Bạn thật sự muốn đăng xuất?">
+                                <i className="fa fa-sign-out" />
+                            </Link>
+                            <a onClick={() => this.testAlert} title="Đăng xuất" >
+                                <i className="fa fa-sign-out" />
+                            </a>
+                        </span>
+                    </div>
+                </div> 
             </header>
         );
+    }
+    testAlert() {
+        // tslint:disable-next-line:no-string-literal
+        window["runAlert"]();
     }
 }
