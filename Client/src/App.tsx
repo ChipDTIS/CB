@@ -13,6 +13,9 @@ class App extends React.Component<any, any> {
   componentDidMount() {
     // tslint:disable-next-line:no-string-literal
     window["reInitApp"]();
+    // tslint:disable-next-line:no-console
+    console.log("FSDFDF");
+    
   }
   render() {
     return (

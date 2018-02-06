@@ -50,7 +50,7 @@ export class HeaderComponent extends React.Component<{}, {}> {
                             <Link to="/login" onClick={() => this.testAlert} title="Đăng xuất"  data-logout-msg="Bạn thật sự muốn đăng xuất?">
                                 <i className="fa fa-sign-out" />
                             </Link>
-                            <a onClick={() => this.testAlert} title="Đăng xuất" >
+                            <a onClick={() => this.testAlert()} title="Đăng xuất" >
                                 <i className="fa fa-sign-out" />
                             </a>
                         </span>
