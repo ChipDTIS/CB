@@ -2,16 +2,29 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 import store from "./_store";
+import __state from "./_models";
 import { action_Login } from "./_actions";
 import { UserLoginModel } from "src/models/LoginModel";
 interface IState {
     redirectToAdmin: boolean;
 }
-export class LoginComponent extends React.Component<{}, IState> {
+interface IProps {
+    redirectToAdmin: boolean;
+}
+const mapStateToProps = (state: __state) => ({
+    redirectToAdmin: state.RedirectToAdmin
+});
+export class LoginComponent extends React.Component<IProps, IState> {
     componentWillMount() {
+        console.log("componentWillMount");
         this.setState({});
+        // store.subscribe = this.props.redirectToAdmin;
+    }
+    componentWillReceiveProps() {
+        console.log("componentWillReceiveProps");
     }
     render() {
+        console.log("render");
         if (this.state.redirectToAdmin) {
             return <Redirect to="/" />;
         }
@@ -71,6 +84,11 @@ export class LoginComponent extends React.Component<{}, IState> {
             Username: "ABC",
             Password: "ACD"
         };
-        store.dispatch(action_Login(model));
+        let ss = store.dispatch(action_Login(model));
+        console.log(ss);
+        let sss = store.getState();
+        console.log(sss);
+        mapStateToProps(sss);
+        this.setState({redirectToAdmin: sss.RedirectToAdmin});
     }
 }

@@ -5,6 +5,7 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILED = "LOGIN_FAILED";
 
 export function action_Login(model: UserLoginModel) {
+    console.log("action");
     return {
         type: LOGIN_ACTION,
         Model: model
