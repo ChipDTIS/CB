@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import App from "./App";
+import { LoginContainer } from "./containers/Login/LoginContainer";
 import registerServiceWorker from "./registerServiceWorker";
 import "./index.css";
 // import { Route } from "react-router";
@@ -9,7 +10,7 @@ import "./index.css";
 // import { ConnectedRouter } from "react-router-redux";
 // import { Provider } from "react-redux";
 // import { AppContainer } from "react-hot-loader";
-import { BrowserRouter, Link } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { Route, Switch, RouteProps, Redirect } from "react-router";
 
 // import { FooterContainer } from "./containers/Footer/FooterContainer";
@@ -49,7 +50,7 @@ ReactDOM.render(
       />
       <ProtectedRoute {...defaultProtectedRouteProps} exact={true} path="/user" render={() => (<h1>Hello guy</h1>)} />
       <ProtectedRoute {...defaultProtectedRouteProps} path="/user/:id" render={() => (<h1>Hello guy 2</h1>)} />
-      <Route path="/login" render={() => (<div><h1>Login Page</h1><Link to="/">Back</Link></div>)} />
+      <Route path="/login" component={LoginContainer} />
       <Route path="*" render={() => (<h1>Page not found</h1>)} />
     </Switch>
   </BrowserRouter>,
