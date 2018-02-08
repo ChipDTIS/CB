@@ -24,13 +24,14 @@
         "label-position": true,
         "max-line-length": [ true, 1024 ],
         "jsx-self-close": false,
+        "jsx-alignment": false,
         "member-ordering": [
             true,
             "public-before-private",
             "static-before-instance",
             "variables-before-functions"
         ],
-        "no-any": true,
+        "no-any": false,
         "no-arg": true,
         "no-bitwise": true,
         "no-console": [
@@ -50,7 +51,7 @@
         "no-empty": true,
         "no-eval": true,
         "no-shadowed-variable": true,
-        "no-string-literal": true,
+        "no-string-literal": false,
         "no-switch-case-fall-through": true,
         "no-trailing-whitespace": false,
         "no-unused-expression": true,

@@ -12,7 +12,7 @@ export class HeaderComponent extends React.Component<{}, IState> {
     render() {
         if (this.state.redirectToLogin) {
             return (
-                <Redirect to="/login" />
+                <Redirect to="/login" push={true} />
             );
         } else {
             return (

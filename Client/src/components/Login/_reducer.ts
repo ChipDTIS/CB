@@ -1,20 +1,66 @@
-import { LOGIN_ACTION, LOGIN_SUCCESS } from "./_actions";
+import { LOGIN_ACTION, LOGIN_SUCCESS, LOGIN_FAILED, USERNAME_VALIDATE, PASSWORD_VALIDATE, USERNAME_INVALID, PASSWORD_INVALID, USERNAME_VALID, PASSWORD_VALID } from "./_actions";
 import __state from "./_models";
-
+// const INITIAL_STATE = ({
+//     IsAuth: false,
+//     Model: {
+//         Username: "",
+//         Password: ""
+//     },
+//     Password_Invalid: false,
+//     Username_Invalid: false,
+//     Username_Invalid_MSG: "Vui lòng nhập tài khoản",
+//     Password_Invalid_MSG: "Vui lòng nhập mật khẩu"
+//   });
 // tslint:disable-next-line:no-any
-const reducer = (state: __state, action: any) => {
-    state = {
-        RedirectToAdmin: false
-    };
-    console.log("reducer0");
+
+// export type OtherAction = { type: "", Model: null };
+// export const OtherAction: OtherAction = { type: "", Model: null };
+const INITIAL_STATE: __state = {
+    IsAuth: false,
+    Model: {
+        Username: "",
+        Password: ""
+    },
+    Password_Invalid: false,
+    Username_Invalid: false,
+    Username_Invalid_MSG: "Vui lòng nhập tài khoản",
+    Password_Invalid_MSG: "Vui lòng nhập mật khẩu"
+}; 
+const reducer = (state: __state = INITIAL_STATE , action: any) => {
+    state.IsAuth = false;
     switch (action.type) {
         case LOGIN_ACTION:
-            
-            console.log("reducer1");
+            state.Model = action.Model;
             break;
         case LOGIN_SUCCESS: 
-        state.RedirectToAdmin = true;
-        console.log("reducer2");
+            state.IsAuth = true;
+            break;
+        case LOGIN_FAILED:
+            state.IsAuth = false;
+            break;
+        case LOGIN_FAILED:
+            break;
+        case USERNAME_VALIDATE:
+            state.Model.Username = action.Username;
+            break;
+        case PASSWORD_VALIDATE:
+            state.Model.Password = action.Password;
+            break;
+        case USERNAME_INVALID:
+            state.Username_Invalid = true;
+            // state.Username_Invalid_MSG = "Vui lòng nhập tài khoản";
+            break;
+        case PASSWORD_INVALID:
+            state.Password_Invalid = true;
+            // state.Password_Invalid_MSG = "Vui lòng nhập mật khẩu";
+            break;
+        case USERNAME_VALID:
+            state.Username_Invalid = false;
+            // state.Username_Invalid_MSG = "";
+            break;
+        case PASSWORD_VALID:
+            state.Password_Invalid = false;
+            // state.Password_Invalid_MSG = "";
             break;
         default:
             break;
