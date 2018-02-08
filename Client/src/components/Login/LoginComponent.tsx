@@ -5,6 +5,7 @@ import store from "./_store";
 // import __state from "./_models";
 import { action_Login, action_UsernameValidate, action_PasswordValidate } from "./_actions";
 import { UserLoginModel } from "src/models/LoginModel";
+import { Unsubscribe } from "redux";
 interface IState {
     IsAuth: boolean;
     Username: string;
@@ -16,14 +17,15 @@ interface IState {
 }
 
 export class LoginComponent extends React.Component<{}, IState> {
+    private unsubscribe: Unsubscribe;
     componentWillMount() {
         console.log("componentWillMount");
         this.setState({});
 
     }
     componentDidMount() {
-        console.log("componentDidMount");
-        store.subscribe(() => {
+        this.unsubscribe = store.subscribe(() => {
+            console.log("componentDidMount");
             let storeState = store.getState();
             if (storeState !== undefined) {
                 this.setState({
@@ -37,8 +39,7 @@ export class LoginComponent extends React.Component<{}, IState> {
         });
     }
     componentWillUnmount() {
-        // tslint:disable-next-line:no-unused-expression
-        store.subscribe(() => void ({}));
+        this.unsubscribe();
     }
     render() {
         if (this.state.IsAuth) {
