@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, LOGIN_ACTION, USERNAME_INVALID, USERNAME_VALID, PASSWORD_INVALID, PASSWORD_VALID, USERNAME_VALIDATE, PASSWORD_VALIDATE } from "src/components/Login/_actions";
+import { LOGIN_ACTION, USERNAME_INVALID, USERNAME_VALID, PASSWORD_INVALID, PASSWORD_VALID, USERNAME_VALIDATE, PASSWORD_VALIDATE, LOGIN_SUCCESS } from "src/components/Login/_actions";
 import { put, takeLatest } from "redux-saga/effects";
 import { Validation } from "src/commons/validate-helper";
 // import { channel } from "redux-saga";
@@ -9,7 +9,7 @@ function* doLogin(action: any) {
     let isUserValidate = Validation.isNullOrEmpty(action.Model.Username);
     let isPasswordValidate = Validation.isNullOrEmpty(action.Model.Password);
     if (!isUserValidate && !isPasswordValidate) {
-        yield put({ type: LOGIN_SUCCESS });
+        yield put({ type: LOGIN_SUCCESS, content: "Đăng nhập thất bại"});
     } else {
         if (isUserValidate) {
             yield put({ type: USERNAME_INVALID });

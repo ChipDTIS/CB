@@ -1,20 +1,8 @@
 import { LOGIN_ACTION, LOGIN_SUCCESS, LOGIN_FAILED, USERNAME_VALIDATE, PASSWORD_VALIDATE, USERNAME_INVALID, PASSWORD_INVALID, USERNAME_VALID, PASSWORD_VALID } from "./_actions";
 import __state from "./_models";
-// const INITIAL_STATE = ({
-//     IsAuth: false,
-//     Model: {
-//         Username: "",
-//         Password: ""
-//     },
-//     Password_Invalid: false,
-//     Username_Invalid: false,
-//     Username_Invalid_MSG: "Vui lòng nhập tài khoản",
-//     Password_Invalid_MSG: "Vui lòng nhập mật khẩu"
-//   });
-// tslint:disable-next-line:no-any
+import noticeStore from "../Notice/_store";
+import { ACTION_SHOWNOTICE_SMALL_WARNING } from "src/components/Notice/_actions";
 
-// export type OtherAction = { type: "", Model: null };
-// export const OtherAction: OtherAction = { type: "", Model: null };
 const INITIAL_STATE: __state = {
     IsAuth: false,
     Model: {
@@ -37,6 +25,7 @@ const reducer = (state: __state = INITIAL_STATE , action: any) => {
             break;
         case LOGIN_FAILED:
             state.IsAuth = false;
+            noticeStore.dispatch(ACTION_SHOWNOTICE_SMALL_WARNING({title: "Đăng nhập", content: action.content}));
             break;
         case LOGIN_FAILED:
             break;
