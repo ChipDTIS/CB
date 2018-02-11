@@ -12,6 +12,7 @@ import "./index.css";
 // import { AppContainer } from "react-hot-loader";
 import { BrowserRouter } from "react-router-dom";
 import { Route, Switch, RouteProps, Redirect } from "react-router";
+import { fakeAuth } from "src/commons/constant";
 
 // import { FooterContainer } from "./containers/Footer/FooterContainer";
 export interface ProtectedRouteProps extends RouteProps {
@@ -20,14 +21,15 @@ export interface ProtectedRouteProps extends RouteProps {
 }
 export class ProtectedRoute extends Route<ProtectedRouteProps> {
   public render() {
+    console.log("route:" + fakeAuth.isAuthenticated);
     let redirectPath: string = "";
-    if (!this.props.isAuthenticated) {
+    if (!fakeAuth.isAuthenticated) {
       redirectPath = this.props.authenticationPath;
     }
-
+    console.log(this.props.location);
     if (redirectPath) {
-      const renderComponent = () => (<Redirect to={{ pathname: redirectPath }} />);
-      return <Route {...this.props} component={renderComponent} render={undefined} />;
+      const renderComponent = () => (<Redirect push={false} to={{ pathname: redirectPath, state: { referrer: this.props.location } }} />);
+      return <Route {...this.props} component={renderComponent} render={(undefined)} />;
     } else {
        return <App><Route {...this.props} /></App>;
       // return <Route {...this.props} render={() => (<App><Component {...this.props.component}/>)} />;
@@ -36,9 +38,10 @@ export class ProtectedRoute extends Route<ProtectedRouteProps> {
 }
 
 const defaultProtectedRouteProps: ProtectedRouteProps = {
-  isAuthenticated: true,
+  isAuthenticated: fakeAuth.isAuthenticated,
   authenticationPath: "/login",
 };
+
 ReactDOM.render(
   <BrowserRouter>
     <Switch>

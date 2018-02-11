@@ -7,7 +7,8 @@ const INITIAL_STATE: __state = {
     IsAuth: false,
     Model: {
         Username: "",
-        Password: ""
+        Password: "",
+        Remember: false
     },
     Password_Invalid: false,
     Username_Invalid: false,

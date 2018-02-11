@@ -6,6 +6,7 @@ import store from "./_store";
 import { action_Login, action_UsernameValidate, action_PasswordValidate } from "./_actions";
 import { UserLoginModel } from "src/models/LoginModel";
 import { Unsubscribe } from "redux";
+import { fakeAuth } from "src/commons/constant";
 interface IState {
     IsAuth: boolean;
     LoginModel: UserLoginModel;
@@ -15,14 +16,19 @@ interface IState {
     Password_Invalid_MSG: string;
 }
 
-export class LoginComponent extends React.Component<{}, IState> {
+export class LoginComponent extends React.Component<any, IState> {
     private unsubscribe: Unsubscribe;
     componentWillMount() {
-        this.setState({});
-    }
-    componentDidMount() {
+        console.log(fakeAuth.isAuthenticated);
+        let storeState = store.getState();
+        this.setState({
+            LoginModel: {
+                Username: storeState !== undefined ? storeState.Model.Username : "",
+                Password: "",
+                Remember: false
+            } 
+        });
         this.unsubscribe = store.subscribe(() => {
-            let storeState = store.getState();
             if (storeState !== undefined) {
                 if (this.state.IsAuth !== storeState.IsAuth
                     || this.state.Username_Invalid !== storeState.Username_Invalid
@@ -44,9 +50,12 @@ export class LoginComponent extends React.Component<{}, IState> {
         this.unsubscribe();
     }
     render() {
+        // const { from } = this.props.location.state || { from: { pathname: '/' } }
+        const { referrer } = this.props.location.state || { referrer: { pathname: "/" } };
         console.log("render again");
         if (this.state.IsAuth) {
-            return <Redirect to="/" />;
+            fakeAuth.authenticate();
+            return <Redirect to={referrer}/>;
         }
         return (
             <div id="extr-page">
