@@ -18,6 +18,7 @@ class App extends React.Component<any, any> {
     
   }
   render() {
+    console.log("ROOT");
     return (
       <div>
         <HeaderContainer />

@@ -7,6 +7,10 @@ export const RouterPath = {
 
 export const fakeAuth = {
     isAuthenticated: false,
+    getAuthentication() {
+        console.log("getAuthentication");
+        return this.isAuthenticated;
+    },
     authenticate() {
         this.isAuthenticated = true;
         // setTimeout(cb, 100);

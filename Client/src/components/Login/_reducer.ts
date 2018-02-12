@@ -6,9 +6,9 @@ import { ACTION_SHOWNOTICE_SMALL_WARNING } from "src/components/Notice/_actions"
 const INITIAL_STATE: __state = {
     IsAuth: false,
     Model: {
-        Username: "",
+        UserName: "",
         Password: "",
-        Remember: false
+        IsRememberMe: false
     },
     Password_Invalid: false,
     Username_Invalid: false,
@@ -31,7 +31,7 @@ const reducer = (state: __state = INITIAL_STATE , action: any) => {
         case LOGIN_FAILED:
             break;
         case USERNAME_VALIDATE:
-            state.Model.Username = action.Username;
+            state.Model.UserName = action.Username;
             break;
         case PASSWORD_VALIDATE:
             state.Model.Password = action.Password;

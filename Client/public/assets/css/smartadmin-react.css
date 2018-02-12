@@ -236,3 +236,26 @@ nav{
 .slider .tooltip.tooltip-main.top {
   margin-top: -35px;
 }
+
+/**
+for block ui
+ */
+ .ui-blocked {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  display: table;
+}
+
+.ui-blocked .loading-icon {
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  color: white;
+}
+
+/*end for ui block*/

@@ -4,12 +4,12 @@ import { Redirect } from "react-router";
 import store from "./_store";
 // import __state from "./_models";
 import { action_Login, action_UsernameValidate, action_PasswordValidate } from "./_actions";
-import { UserLoginModel } from "src/models/LoginModel";
+import { LoginViewModel } from "src/models/LoginViewModel";
 import { Unsubscribe } from "redux";
 import { fakeAuth } from "src/commons/constant";
 interface IState {
     IsAuth: boolean;
-    LoginModel: UserLoginModel;
+    LoginViewModel: LoginViewModel;
     Username_Invalid: boolean;
     Password_Invalid: boolean;
     Username_Invalid_MSG: string;
@@ -19,13 +19,12 @@ interface IState {
 export class LoginComponent extends React.Component<any, IState> {
     private unsubscribe: Unsubscribe;
     componentWillMount() {
-        console.log(fakeAuth.isAuthenticated);
         let storeState = store.getState();
         this.setState({
-            LoginModel: {
-                Username: storeState !== undefined ? storeState.Model.Username : "",
+            LoginViewModel: {
+                UserName: storeState !== undefined ? storeState.Model.UserName : "",
                 Password: "",
-                Remember: false
+                IsRememberMe: false
             } 
         });
         this.unsubscribe = store.subscribe(() => {
@@ -50,9 +49,7 @@ export class LoginComponent extends React.Component<any, IState> {
         this.unsubscribe();
     }
     render() {
-        // const { from } = this.props.location.state || { from: { pathname: '/' } }
         const { referrer } = this.props.location.state || { referrer: { pathname: "/" } };
-        console.log("render again");
         if (this.state.IsAuth) {
             fakeAuth.authenticate();
             return <Redirect to={referrer}/>;
@@ -77,14 +74,14 @@ export class LoginComponent extends React.Component<any, IState> {
                                                 <label className="label">Tài khoản</label>
                                                 <label className="input"> <i className="icon-append fa fa-user"></i>
                                                     <input type="email" name="email"
-                                                        value={this.state.LoginModel.Username || ""}
+                                                        value={this.state.LoginViewModel.UserName || ""}
                                                         onChange={v => this.setState({
-                                                            LoginModel: {
-                                                                Username: v.target["value"],
-                                                                Password: this.state.LoginModel.Password,
-                                                                Remember: this.state.LoginModel.Remember
+                                                            LoginViewModel: {
+                                                                UserName: v.target["value"],
+                                                                Password: this.state.LoginViewModel.Password,
+                                                                Remember: this.state.LoginViewModel.IsRememberMe
                                                             }
-                                                        }, () => store.dispatch(action_UsernameValidate(this.state.LoginModel.Username)))} />
+                                                        }, () => store.dispatch(action_UsernameValidate(this.state.LoginViewModel.UserName)))} />
 
                                                     {this.state.Username_Invalid ? <em id="email-error" className="invalid">{this.state.Username_Invalid_MSG}</em> : null}
                                                     <b className="tooltip tooltip-top-right"><i className="fa fa-user txt-color-teal"></i> Vui lòng nhập tài khoản của bạn</b></label>
@@ -94,14 +91,14 @@ export class LoginComponent extends React.Component<any, IState> {
                                                 <label className="label">Mật khẩu</label>
                                                 <label className="input"> <i className="icon-append fa fa-lock"></i>
                                                     <input type="password" name="password"
-                                                        value={this.state.LoginModel.Password || ""}
+                                                        value={this.state.LoginViewModel.Password || ""}
                                                         onChange={v => this.setState({
-                                                            LoginModel: {
+                                                            LoginViewModel: {
                                                                 Password: v.target["value"],
-                                                                Username: this.state.LoginModel.Username,
-                                                                Remember: this.state.LoginModel.Remember
+                                                                UserName: this.state.LoginViewModel.UserName,
+                                                                Remember: this.state.LoginViewModel.IsRememberMe
                                                             }
-                                                        }, () => store.dispatch(action_PasswordValidate(this.state.LoginModel.Password)))} />
+                                                        }, () => store.dispatch(action_PasswordValidate(this.state.LoginViewModel.Password)))} />
                                                     {this.state.Password_Invalid ? <em id="password-error" className="invalid">{this.state.Password_Invalid_MSG}</em> : null}
                                                     <b className="tooltip tooltip-top-right"><i className="fa fa-lock txt-color-teal"></i> Nhập mật khẩu của bạn</b> </label>
                                                 <div className="note">
@@ -113,10 +110,10 @@ export class LoginComponent extends React.Component<any, IState> {
                                                 <label className="checkbox">
                                                     <input type="checkbox" name="remember" onChange={v => (
                                                         this.setState({
-                                                            LoginModel: {
-                                                                Username: this.state.LoginModel.Username,
-                                                                Password: this.state.LoginModel.Password,
-                                                                Remember: true
+                                                            LoginViewModel: {
+                                                                UserName: this.state.LoginViewModel.UserName,
+                                                                Password: this.state.LoginViewModel.Password,
+                                                                IsRememberMe: true
                                                             }
                                                         }))} defaultChecked={false} />
                                                     <i></i>Duy trì đăng nhập</label>
@@ -124,10 +121,10 @@ export class LoginComponent extends React.Component<any, IState> {
                                         </fieldset>
                                         <footer>
                                             <button type="button" onClick={() => {
-                                                let model: UserLoginModel = {
-                                                    Username: this.state.LoginModel.Username,
-                                                    Password: this.state.LoginModel.Password,
-                                                    Remember: this.state.LoginModel.Remember
+                                                let model: LoginViewModel = {
+                                                    UserName: this.state.LoginViewModel.UserName,
+                                                    Password: this.state.LoginViewModel.Password,
+                                                    IsRememberMe: this.state.LoginViewModel.IsRememberMe
                                                 };
                                                 store.dispatch(action_Login(model));
                                             }} className="btn btn-primary">Đăng nhập</button>

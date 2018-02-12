@@ -6,7 +6,9 @@ interface IState {
     redirectToLogin: boolean;
 }
 export class HeaderComponent extends React.Component<{}, IState> {
+    
     componentWillMount() {
+        console.log("HeaderComponent");
         this.setState({});
     }
     render() {
@@ -69,7 +71,6 @@ export class HeaderComponent extends React.Component<{}, IState> {
             );
         }
     }
-    
     async logout() {
         let result = await SmartAlerts.show({
             title: "<i class='fa fa-sign-out txt-color-orangeDark'></i> Đăng xuất <span class='txt-color-orangeDark'><strong>Toàn</strong></span> ?",

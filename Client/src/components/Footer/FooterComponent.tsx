@@ -1,6 +1,9 @@
 import * as React from "react";
 
 export class FooterComponent extends React.Component<{}, {}> {
+    componentWillMount() {
+        console.log("FooterComponent");
+    }
     render() {
         return (
             <div className="page-footer">

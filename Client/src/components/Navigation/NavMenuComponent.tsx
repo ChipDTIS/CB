@@ -1,7 +1,13 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
+import store from "./_store";
+import { action_GetCurrentUser } from "./_actions";
 
 export class MenuNavComponent extends React.Component<{}, {}> {
+    componentWillMount() {
+        console.log("MenuNavComponent");
+        store.dispatch(action_GetCurrentUser());
+    }
     render() {
         return (
             <aside id="left-panel">
@@ -20,7 +26,11 @@ export class MenuNavComponent extends React.Component<{}, {}> {
                             <a href="#" title="Danh mục"><i className="fa fa-lg fa-fw fa-home"></i> <span className="menu-item-parent">Danh mục</span></a>
                             <ul >
                                 <li>
-                                    <Link to="/users" title="Danh mục"><span className="menu-item-parent">Danh sách nhân viên</span></Link>
+                                    <Link to="/user" title="Danh mục"><span className="menu-item-parent">Danh sách nhân viên</span></Link>
+                                   
+                                </li>
+                                <li>
+                                    <Link to="/guy" title="Danh mục 2"><span className="menu-item-parent">Danh sách nhân viên 2</span></Link>
                                    
                                 </li>
                             </ul>

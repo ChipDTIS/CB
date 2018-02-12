@@ -21,12 +21,10 @@ export interface ProtectedRouteProps extends RouteProps {
 }
 export class ProtectedRoute extends Route<ProtectedRouteProps> {
   public render() {
-    console.log("route:" + fakeAuth.isAuthenticated);
     let redirectPath: string = "";
-    if (!fakeAuth.isAuthenticated) {
+    if (!fakeAuth.getAuthentication()) {
       redirectPath = this.props.authenticationPath;
     }
-    console.log(this.props.location);
     if (redirectPath) {
       const renderComponent = () => (<Redirect push={false} to={{ pathname: redirectPath, state: { referrer: this.props.location } }} />);
       return <Route {...this.props} component={renderComponent} render={(undefined)} />;
@@ -38,7 +36,7 @@ export class ProtectedRoute extends Route<ProtectedRouteProps> {
 }
 
 const defaultProtectedRouteProps: ProtectedRouteProps = {
-  isAuthenticated: fakeAuth.isAuthenticated,
+  isAuthenticated: fakeAuth.getAuthentication(),
   authenticationPath: "/login",
 };
 
@@ -52,6 +50,7 @@ ReactDOM.render(
         render={() => (<h1>Hello sir</h1>)}
       />
       <ProtectedRoute {...defaultProtectedRouteProps} exact={true} path="/user" render={() => (<h1>Hello guy</h1>)} />
+      <ProtectedRoute {...defaultProtectedRouteProps} exact={true} path="/guy" render={() => (<h1>Hello guy 2</h1>)} />
       <ProtectedRoute {...defaultProtectedRouteProps} path="/user/:id" render={() => (<h1>Hello guy 2</h1>)} />
       <Route path="/login" component={LoginContainer} />
       <Route path="*" render={() => (<h1>Page not found</h1>)} />

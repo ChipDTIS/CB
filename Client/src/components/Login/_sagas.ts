@@ -6,10 +6,10 @@ import { Validation } from "src/commons/validate-helper";
 
 // tslint:disable-next-line:no-any
 function* doLogin(action: any) {
-    let isUserValidate = Validation.isNullOrEmpty(action.Model.Username);
+    let isUserValidate = Validation.isNullOrEmpty(action.Model.UserName);
     let isPasswordValidate = Validation.isNullOrEmpty(action.Model.Password);
     if (!isUserValidate && !isPasswordValidate) {
-        yield put({ type: LOGIN_SUCCESS, content: "Đăng nhập thất bại"});
+        yield put({ type: LOGIN_SUCCESS});
     } else {
         if (isUserValidate) {
             yield put({ type: USERNAME_INVALID });
@@ -38,26 +38,7 @@ function* doPasswordValidate(action: any) {
 }
 
 export function* runner() {
-    console.log("login saga");
     yield takeLatest(LOGIN_ACTION, doLogin);
     yield takeLatest(USERNAME_VALIDATE, doUsernameValidate);
     yield takeLatest(PASSWORD_VALIDATE, doPasswordValidate);
-    // if (false) {
-    //     const chan = yield call(channel);
-    //     yield fork(handleRequets, chan);
-    //     while (true) {
-    //         const { payload } = yield take("REQUEST");
-    //         yield put(chan, payload);
-    //     }
-    // }
 }
-
-// function* handleRequets(chan: any) {
-//     while (true) {
-//         const payload = yield take(chan);
-//         yield takeLatest(LOGIN_ACTION, doLogin);
-//         yield takeLatest(USERNAME_VALIDATE, doUsernameValidate);
-//         yield takeLatest(PASSWORD_VALIDATE, doPasswordValidate);
-//         yield put(chan, payload);
-//     }
-// }

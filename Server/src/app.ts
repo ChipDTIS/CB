@@ -88,7 +88,10 @@ app.use(express.static(path.join(__dirname, "../../client/build")));
  * Primary app routes.
  */
 app.get("/api/test", (req: Request, res: Response) => {
-  res.send("SDFSDF");
+  const data = ({
+    firstName: "T"
+  });
+  res.status(200).send(data);
 });
 app.get("/", homeController.index);
 app.get("/login", userController.getLogin);
@@ -107,7 +110,7 @@ app.post("/account/profile", passportConfig.isAuthenticated, userController.post
 app.post("/account/password", passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post("/account/delete", passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get("/account/unlink/:provider", passportConfig.isAuthenticated, userController.getOauthUnlink);
-
+app.get("*", homeController.index);
 /**
  * API examples routes.
  */
